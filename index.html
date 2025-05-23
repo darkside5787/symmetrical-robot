@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trendex AI Bot - Automate Your Trading</title>
+    <style>
+        body { margin: 0; font-family: 'Arial', sans-serif; background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%); color: #e0e0e0; }
+        header { text-align: center; padding: 50px 20px; background: rgba(0, 0, 0, 0.5); }
+        h1 { font-size: 3em; margin: 0; color: #00ddeb; text-shadow: 0 0 10px #00ddeb; }
+        h2 { font-size: 2em; color: #00ddeb; }
+        p { font-size: 1.2em; }
+        button { padding: 15px 30px; background: #00ddeb; border: none; border-radius: 25px; color: #0d1b2a; font-weight: bold; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
+        button:hover { transform: scale(1.05); box-shadow: 0 0 15px #00ddeb; }
+        section { padding: 40px 20px; text-align: center; }
+        .glow-box { background: rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 20px; margin: 20px auto; max-width: 800px; box-shadow: 0 0 20px rgba(0, 221, 235, 0.3); }
+        .animated-border { border: 2px solid transparent; border-radius: 15px; animation: borderGlow 3s infinite; }
+        @keyframes borderGlow { 0% { border-color: #00ddeb; box-shadow: 0 0 10px #00ddeb; } 50% { border-color: #00a3af; box-shadow: 0 0 20px #00a3af; } 100% { border-color: #00ddeb; box-shadow: 0 0 10px #00ddeb; } }
+        .stats { display: flex; justify-content: space-around; flex-wrap: wrap; }
+        .stats div { margin: 10px; position: relative; padding-left: 40px; }
+        .stats div::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 30px; height: 30px; background-size: contain; background-repeat: no-repeat; }
+        .stats .accuracy::before { background-image: url('https://img.icons8.com/ios-filled/50/00ddeb/target.png'); }
+        .stats .speed::before { background-image: url('https://img.icons8.com/ios-filled/50/00ddeb/speed.png'); }
+        .stats .exchanges::before { background-image: url('https://img.icons8.com/ios-filled/50/00ddeb/bank.png'); }
+        .stats .security::before { background-image: url('https://img.icons8.com/ios-filled/50/00ddeb/lock.png'); }
+        .testimonials { display: flex; justify-content: space-around; flex-wrap: wrap; }
+        .testimonials div { background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px; margin: 10px; max-width: 300px; }
+        .video-player, .profit-calculator { margin: 20px 0; }
+        iframe { border-radius: 10px; }
+        .chat-bubble { position: fixed; bottom: 20px; right: 20px; background: #00ddeb; padding: 15px; border-radius: 15px; box-shadow: 0 0 10px #00ddeb; width: 300px; max-height: 400px; overflow: hidden; }
+        .chat-bubble.expanded { max-height: 500px; overflow-y: auto; }
+        .chat-header { cursor: pointer; }
+        .chat-suggestions { margin: 10px 0; }
+        .chat-suggestions p { margin: 5px 0; font-size: 0.9em; color: #0d1b2a; cursor: pointer; }
+        .chat-suggestions p:hover { text-decoration: underline; }
+        .chat-history { margin: 10px 0; max-height: 300px; overflow-y: auto; scroll-behavior: smooth; -ms-overflow-style: auto; scrollbar-width: auto; }
+        .chat-history::-webkit-scrollbar { width: 8px; }
+        .chat-history::-webkit-scrollbar-thumb { background: #0d1b2a; border-radius: 4px; }
+        .chat-message { margin: 5px 0; padding: 5px 10px; border-radius: 10px; }
+        .user-message { background: #1b263b; color: #e0e0e0; text-align: right; margin-left: 20%; }
+        .bot-message { background: #e0e0e0; color: #0d1b2a; text-align: left; margin-right: 20%; }
+        footer { text-align: center; padding: 20px; background: rgba(0, 0, 0, 0.5); }
+        input, select { padding: 10px; margin: 5px; border-radius: 5px; border: none; width: calc(100% - 20px); }
+        a { color: #00ddeb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .bot-card { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); padding: 20px; border-radius: 10px; margin: 10px; max-width: 250px; }
+        .bot-card h3 { color: #00ddeb; }
+        .bot-card button { background: #ff6f61; }
+        .bot-card button:hover { box-shadow: 0 0 15px #ff6f61; }
+        #form-feedback { margin-top: 10px; font-size: 0.9em; }
+        #form-feedback.success { color: #00ddeb; }
+        #form-feedback.error { color: #ff6f61; }
+        form { display: flex; flex-direction: column; align-items: center; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; display: table; }
+        th, td { padding: 10px; border: 1px solid #00ddeb; text-align: left; }
+        th { background: rgba(0, 221, 235, 0.2); }
+        #waitlist-data-error { color: #ff6f61; display: none; margin-top: 10px; }
+        #waitlist-data { display: block; }
+        #features .glow-box { background: rgba(0, 221, 235, 0.1); transform: scale(1.05); }
+        #features p { font-size: 1.5em; line-height: 1.5; margin: 5px 0; }
+        #features p::before { content: ''; display: inline-block; width: 30px; height: 30px; margin-right: 10px; background-size: contain; vertical-align: middle; }
+        #features p:nth-child(1)::before { background-image: url('https://img.icons8.com/ios-filled/50/00ddeb/robot.png'); }
+        #features p:nth-child(2)::before { background-image: url('https://img.icons8.com/ios-filled/50/00ddeb/trend.png'); }
+        #features p:nth-child(3)::before { background-image: url('https://img.icons8.com/ios-filled/50/00ddeb/gear.png'); }
+        #features p:nth-child(4)::before { background-image: url('https://img.icons8.com/ios-filled/50/00ddeb/shield.png'); }
+        #features p:nth-child(5)::before { background-image: url('https://img.icons8.com/ios-filled/50/00ddeb/phone.png'); }
+        #features p:nth-child(6)::before { background-image: url('https://img.icons8.com/ios-filled/50/00ddeb/calendar.png'); }
+        #features p:nth-child(7)::before { background-image: url('https://img.icons8.com/ios-filled/50/00ddeb/stop.png'); }
+        #features p:nth-child(8)::before { background-image: url('https://img.icons8.com/ios-filled/50/00ddeb/telegram-app.png'); }
+        #features p:nth-child(9)::before { background-image: url('https://img.icons8.com/ios-filled/50/00ddeb/book.png'); }
+        .faq-item { margin: 15px 0; text-align: left; }
+        .faq-item h3 { color: #00ddeb; cursor: pointer; }
+        .faq-answer { display: none; padding: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 5px; }
+        .faq-answer.active { display: block; }
+        .tools-list { display: flex; flex-wrap: wrap; justify-content: space-around; }
+        .tool-card { background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 10px; margin: 10px; max-width: 200px; }
+        #results p { margin: 5px 0; }
+        #market-updates table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        #market-updates th, #market-updates td { padding: 10px; border: 1px solid #00ddeb; text-align: left; }
+        #market-updates th { background: rgba(0, 221, 235, 0.2); }
+        #market-updates .positive { color: #00ff00; }
+        #market-updates .negative { color: #ff0000; }
+    </style>
+</head>
+<body>
+    <header>
+        <audio id="background-audio" loop>
+            <source src="audio.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <button onclick="toggleAudio()">Unmute Audio</button>
+        <p>Audio failed to load. Host the file and update the URL.</p>
+        <h1>Automate Your Trading with Trendex AI Bot</h1>
+        <p>Smarter, Faster, Profitable — Get Real-Time Signals & Auto-Trade Execution</p>
+        <button onclick="window.location.href='#join-waitlist'">Claim My Spot</button>
+        <p>Trusted by 10,000+ Traders Worldwide</p>
+    </header>
+
+    <section id="why-trendex">
+        <h2>🚀 Why Trendex?</h2>
+        <div class="glow-box stats">
+            <div class="accuracy">
+                <h3>99.9%</h3>
+                <p>Trade Execution Accuracy</p>
+            </div>
+            <div class="speed">
+                <h3>10x</h3>
+                <p>Faster Than Manual Trading</p>
+            </div>
+            <div class="exchanges">
+                <h3>30+</h3>
+                <p>Supported Exchanges</p>
+            </div>
+            <div class="security">
+                <h3>100%</h3>
+                <p>Secure Trading</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="security">
+        <h2>🔒 Your Security, Our Priority</h2>
+        <div class="glow-box">
+            <p>Trade with confidence using AES-256 encryption, two-factor authentication, and regular third-party security audits.</p>
+            <img src="https://via.placeholder.com/600x300?text=Security+Features" alt="Security Features">
+        </div>
+    </section>
+
+    <section id="live-feed">
+        <h2>📡 Live Trade Feed (Demo)</h2>
+        <div class="glow-box">
+            <div id="tradingview_chart"></div>
+            <p>View real-time market data from Binance. Switch between trading pairs to track your favorite assets.</p>
+            <p id="chart-error" style="color: #ff6f61; display: none;">Failed to load the chart. Please check your internet connection or try again later.</p>
+        </div>
+    </section>
+
+    <section id="market-updates">
+        <h2>📊 Live Market Updates</h2>
+        <div class="glow-box">
+            <p>Stay informed with the latest market trends for top cryptocurrencies.</p>
+            <table>
+                <tr>
+                    <th>Asset</th>
+                    <th>Price (USD)</th>
+                    <th>24h Change</th>
+                    <th>Last Updated</th>
+                </tr>
+                <tr>
+                    <td>Bitcoin (BTC)</td>
+                    <td>$75,000</td>
+                    <td class="positive">+3.5%</td>
+                    <td>02:13 PM IST, May 19, 2025</td>
+                </tr>
+                <tr>
+                    <td>Ethereum (ETH)</td>
+                    <td>$3,200</td>
+                    <td class="negative">-1.2%</td>
+                    <td>02:13 PM IST, May 19, 2025</td>
+                </tr>
+                <tr>
+                    <td>Binance Coin (BNB)</td>
+                    <td>$580</td>
+                    <td class="positive">+2.8%</td>
+                    <td>02:13 PM IST, May 19, 2025</td>
+                </tr>
+            </table>
+            <p style="margin-top: 10px;">Note: This is a demo. Real-time data requires API integration.</p>
+        </div>
+    </section>
+
+    <section id="futures-bots">
+        <h2>🤖 Futures Trading Bots</h2>
+        <div class="glow-box stats">
+            <div class="bot-card">
+                <h3>Glint BTC Bot</h3>
+                <p>Optimized for Bitcoin futures trading with AI-driven strategies.</p>
+                <button onclick="window.location.href='#join-waitlist'">Start Trading</button>
+            </div>
+            <div class="bot-card">
+                <h3>Leverage Master Bot</h3>
+                <p>Customize leverage up to 10X with dynamic risk controls.</p>
+                <button onclick="window.location.href='#join-waitlist'">Start Trading</button>
+            </div>
+            <div class="bot-card">
+                <h3>Hedging Futures Bot</h3>
+                <p>Protect your portfolio with automated hedging strategies.</p>
+                <button onclick="window.location.href='#join-waitlist'">Start Trading</button>
+            </div>
+            <div class="bot-card">
+                <h3>Volatility Rider Bot</h3>
+                <p>Capitalize on market swings with breakout trading.</p>
+                <button onclick="window.location.href='#join-waitlist'">Start Trading</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="videos">
+        <h2>🎥 Latest Trendex AI Videos</h2>
+        <div class="glow-box video-player">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLzVFc58cSNM_KzF5uH8j5Lq7Wq9kV1lT&autoplay=1&mute=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <button onclick="window.location.href='https://www.youtube.com/channel/UC485uhNL2M0RqM_SNq075kw'">Visit Our Channel</button>
+            <p>Check out our latest videos on trading tips and updates! To embed your channel's videos, create a playlist on your channel, then replace the 'list=PLzVFc58cSNM_KzF5uH8j5Lq7Wq9kV1lT' with your playlist ID in the embed URL above.</p>
+        </div>
+    </section>
+
+    <section id="features">
+        <h2>🌟 What You'll Get</h2>
+        <div class="glow-box">
+            <p>🤖 AI-Based Signals</p>
+            <p>📈 Trend Analysis</p>
+            <p>⚙️ Auto Trading</p>
+            <p>🔒 Risk Control</p>
+            <p>📞 1-on-1 Support</p>
+            <p>🗓 Daily & Weekly Market Outlook</p>
+            <p>📉 Stop Loss + Trailing Protection</p>
+            <p>📢 Telegram Trade Alerts</p>
+            <p>📚 Free Trading Tutorials</p>
+        </div>
+    </section>
+
+    <section id="testimonials">
+        <h2>🌍 What Our Traders Say</h2>
+        <div class="glow-box testimonials">
+            <div>
+                <p>"Trendex transformed my trading! I grew my portfolio by 20% in 3 months."</p>
+                <p>- Alex M., Crypto Trader</p>
+                <p>Verified Buyer</p>
+            </div>
+            <div>
+                <p>"The real-time dashboard is a game-changer. I track every trade instantly."</p>
+                <p>- Priya S., Investor</p>
+                <p>Verified Buyer</p>
+            </div>
+            <div>
+                <p>"Their support team is amazing. Always there to help me optimize my strategy."</p>
+                <p>- John K., Beginner Trader</p>
+                <p>Verified Buyer</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="new-features">
+        <h2>✨ More Features</h2>
+        <div class="glow-box">
+            <h3>Frequently Asked Questions</h3>
+            <div class="faq-item">
+                <h3 onclick="toggleFAQ(this)">How does Trendex ensure my trades are secure?</h3>
+                <div class="faq-answer">We use AES-256 encryption, two-factor authentication, and regular third-party security audits to keep your trades safe.</div>
+            </div>
+            <div class="faq-item">
+                <h3 onclick="toggleFAQ(this)">What exchanges does Trendex support?</h3>
+                <div class="faq-answer">Trendex supports over 30 exchanges, including Binance, Coinbase, Kraken, and more.</div>
+            </div>
+            <div class="faq-item">
+                <h3 onclick="toggleFAQ(this)">Can I get personalized trading advice?</h3>
+                <div class="faq-answer">Yes! We offer 1-on-1 support to help you optimize your trading strategy.</div>
+            </div>
+            <h3 style="margin-top: 20px;">Trading Tools</h3>
+            <div class="tools-list">
+                <div class="tool-card">
+                    <h4>Portfolio Tracker</h4>
+                    <p>Monitor your investments in real-time across multiple exchanges.</p>
+                </div>
+                <div class="tool-card">
+                    <h4>Risk Analyzer</h4>
+                    <p>Assess and manage risks with AI-driven insights.</p>
+                </div>
+                <div class="tool-card">
+                    <h4>Trade Simulator</h4>
+                    <p>Practice trading strategies without risking real funds.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="bonus-offer">
+        <h2>🏡 Bonus Offer</h2>
+        <div class="glow-box">
+            <p>Join Now & Get:</p>
+            <p>✅ Lifetime Telegram Group Entry<br>✅ Strategy Masterclass Invite<br>✅ Priority WhatsApp Support</p>
+            <p>Only 25 Spots Left!</p>
+        </div>
+    </section>
+
+    <section id="referral">
+        <h2>💰 Share and Earn</h2>
+        <div class="glow-box">
+            <p>Invite friends to Trendex and earn 5% of their trading profits.</p>
+            <button onclick="showContactUs()">Get Your Referral Link</button>
+            <div id="contact-us" style="display: none; margin-top: 10px;">
+                <p>Contact Us to get your referral link:<br>📞 Call: 6382406759<br>📧 Email: support@trendex.com</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="profit-calculator">
+        <h2>📊 Estimate Your Profits</h2>
+        <div class="glow-box profit-calculator">
+            <p>The Rule of 72 is a simple way to estimate how long it will take for your investment to double based on a fixed annual rate of return. Just divide 72 by your expected annual return percentage.</p>
+            <p>Enter the details below to see your returns after 1 and 2 years, with or without leverage for futures trading. Note: Leverage increases both potential gains and risks.</p>
+            <select id="currency">
+                <option value="USD">USD</option>
+                <option value="INR">INR</option>
+                <option value="EUR">EUR</option>
+                <option value="GBP">GBP</option>
+            </select>
+            <input type="number" id="principal" placeholder="Initial Investment">
+            <input type="number" id="interestRate" placeholder="Expected Annual Return (%)">
+            <input type="number" id="leverage" placeholder="Leverage (e.g., 2 for 2x, optional)">
+            <input type="number" id="years" placeholder="Number of Years (optional)">
+            <button onclick="calculateProfits()">Calculate</button>
+            <div id="results" style="margin-top: 20px;"></div>
+            <p style="margin-top: 20px;">Learn more about the <a href="https://www.richdad.com/tools/cashflow-quadrant" target="_blank">Cashflow Quadrant</a> and how investing can help you achieve financial freedom.</p>
+        </div>
+    </section>
+
+    <section id="join-waitlist">
+        <h2>📝 Join the Waitlist</h2>
+        <div class="glow-box animated-border">
+            <form id="waitlist-form" action="https://script.google.com/macros/s/AKfycbzN9QWDk1JbhsD75VDTuq7ceFN2zJhGsr8wmgPF4VkgmKnpxWB8qpKjvOt3xDmeKS0piQ/exec" method="POST">
+                <input type="text" name="name" placeholder="Enter your name" required pattern="[A-Za-z\s]{2,}">
+                <input type="tel" name="contactNumber" placeholder="Enter your contact number" required pattern="\d{10}">
+                <input type="email" name="workEmail" placeholder="Enter your work email" required>
+                <button type="submit">Claim My Spot Now</button>
+            </form>
+            <div id="form-feedback"></div>
+            <button onclick="fetchWaitlistData()" style="margin-top: 10px;">View Current Waitlist</button>
+            <div id="waitlist-data-error"></div>
+            <div id="waitlist-data"></div>
+        </div>
+        <p>
+            <a href="https://wa.me/916382406759">📱 Chat on WhatsApp</a> |
+            <a href="https://chat.whatsapp.com/DY5ZdFjGVz0JF1O4fBejmr">📣 Join WhatsApp Channel</a> |
+            <a href="https://instagram.com/manivasakam024">📸 Follow on Instagram</a> |
+            <a href="tel:+916382406759">📞 Call Us: 6382406759</a>
+        </p>
+    </section>
+
+    <section id="chat-assistant">
+        <div class="chat-bubble">
+            <div class="chat-header" onclick="toggleChat()">
+                <p>Trendex AI Assistant</p>
+            </div>
+            <div class="chat-suggestions" id="chat-suggestions">
+                <p onclick="handleSuggestedQuestion('What is Trendex?')">What is Trendex?</p>
+                <p onclick="handleSuggestedQuestion('How do I start trading?')">How do I start trading?</p>
+                <p onclick="handleSuggestedQuestion('What are the benefits of using Trendex?')">What are the benefits of using Trendex?</p>
+                <p onclick="handleSuggestedQuestion('Is my money safe with Trendex?')">Is my money safe with Trendex?</p>
+                <p onclick="handleSuggestedQuestion('What trading bots are available?')">What trading bots are available?</p>
+                <p onclick="handleSuggestedQuestion('Who should I contact for more information?')">Who should I contact for more information?</p>
+            </div>
+            <div class="chat-history" id="chat-history">
+                <div class="bot-message">Hello! I'm the Trendex AI Assistant. How can I help you today?</div>
+            </div>
+            <input type="text" id="chat-input" placeholder="Ask me anything...">
+            <button onclick="chatWithAssistant()">Send</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Trendex. All rights reserved. | <a href="#privacy">Privacy Policy</a></p>
+        <div>
+            <input type="email" placeholder="Subscribe to our newsletter">
+            <button onclick="subscribe()">Subscribe</button>
+        </div>
+    </footer>
+
+    <script src="https://s3.tradingview.com/tv.js"></script>
+    <script>
+        const currencySymbols = {
+            'USD': '$',
+            'INR': '₹',
+            'EUR': '€',
+            'GBP': '£'
+        };
+
+        function toggleAudio() {
+            var audio = document.getElementById("background-audio");
+            if (audio.muted) {
+                audio.muted = false;
+                audio.play();
+            } else {
+                audio.muted = true;
+            }
+        }
+
+        function calculateProfits() {
+            const currency = document.getElementById('currency').value;
+            const principal = parseFloat(document.getElementById('principal').value);
+            const interestRate = parseFloat(document.getElementById('interestRate').value);
+            const leverage = parseFloat(document.getElementById('leverage').value) || 1;
+            const years = parseFloat(document.getElementById('years').value);
+            const resultsDiv = document.getElementById('results');
+
+            if (isNaN(principal) || principal <= 0) {
+                resultsDiv.innerHTML = '<p style="color: #ff6f61;">Please enter a valid initial investment.</p>';
+                return;
+            }
+            if (isNaN(interestRate) || interestRate <= 0) {
+                resultsDiv.innerHTML = '<p style="color: #ff6f61;">Please enter a valid annual return rate.</p>';
+                return;
+            }
+            if (leverage < 1) {
+                resultsDiv.innerHTML = '<p style="color: #ff6f61;">Leverage must be at least 1.</p>';
+                return;
+            }
+
+            const yearsToDouble = 72 / interestRate;
+            const annualReturn = principal * (interestRate / 100);
+            const leveragedRate = interestRate * leverage;
+            const futureValue1Year = principal * Math.pow(1 + interestRate / 100, 1);
+            const futureValue2Years = principal * Math.pow(1 + interestRate / 100, 2);
+            const futureValue1YearLeveraged = principal * Math.pow(1 + leveragedRate / 100, 1);
+            const futureValue2YearsLeveraged = principal * Math.pow(1 + leveragedRate / 100, 2);
+            const symbol = currencySymbols[currency];
+
+            let output = `<p>With an annual return of ${interestRate}%, your investment will double approximately every ${yearsToDouble.toFixed(1)} years.</p>`;
+            output += `<p>Your annual return amount (without leverage) will be ${symbol}${annualReturn.toFixed(2)}.</p>`;
+            output += `<p>Without Leverage:</p>`;
+            output += `<p>After 1 year, your investment will be worth ${symbol}${futureValue1Year.toFixed(2)} (Profit: ${symbol}${(futureValue1Year - principal).toFixed(2)}).</p>`;
+            output += `<p>After 2 years, your investment will be worth ${symbol}${futureValue2Years.toFixed(2)} (Profit: ${symbol}${(futureValue2Years - principal).toFixed(2)}).</p>`;
+            
+            if (leverage > 1) {
+                output += `<p>With ${leverage}x Leverage (Annual Return: ${leveragedRate.toFixed(2)}%):</p>`;
+                output += `<p>After 1 year, your investment will be worth ${symbol}${futureValue1YearLeveraged.toFixed(2)} (Profit/Loss: ${symbol}${(futureValue1YearLeveraged - principal).toFixed(2)}).</p>`;
+                output += `<p>After 2 years, your investment will be worth ${symbol}${futureValue2YearsLeveraged.toFixed(2)} (Profit/Loss: ${symbol}${(futureValue2YearsLeveraged - principal).toFixed(2)}).</p>`;
+            }
+
+            if (!isNaN(years) && years > 0) {
+                const futureValue = principal * Math.pow(1 + interestRate / 100, years);
+                const futureValueLeveraged = principal * Math.pow(1 + leveragedRate / 100, years);
+                output += `<p>Without Leverage:</p>`;
+                output += `<p>After ${years} years, your investment will be worth ${symbol}${futureValue.toFixed(2)} (Profit: ${symbol}${(futureValue - principal).toFixed(2)}).</p>`;
+                if (leverage > 1) {
+                    output += `<p>With ${leverage}x Leverage:</p>`;
+                    output += `<p>After ${years} years, your investment will be worth ${symbol}${futureValueLeveraged.toFixed(2)} (Profit/Loss: ${symbol}${(futureValueLeveraged - principal).toFixed(2)}).</p>`;
+                }
+            }
+
+            resultsDiv.innerHTML = output;
+        }
+
+        function subscribe() {
+            alert("Thank you for subscribing!");
+        }
+
+        function toggleChat() {
+            const chatBubble = document.querySelector('.chat-bubble');
+            chatBubble.classList.toggle('expanded');
+        }
+
+        const responses = {
+            "what is trendex": "Trendex is an AI-powered trading platform that helps you automate your trades with real-time signals and strategies. It’s trusted by over 10,000 traders worldwide!",
+            "how do i start trading": "To start trading, join the waitlist by entering your email in the 'Join the Waitlist' section. Once approved, you’ll get access to our trading bots and features!",
+            "what are the benefits of using trendex": "Trendex offers AI-based signals, trend analysis, auto-trading, risk control, and 1-on-1 support. Check out the 'What You'll Get' section for more details!",
+            "is my money safe with trendex": "Yes, your funds are secure with AES-256 encryption, two-factor authentication, and regular security audits. Learn more in the 'Your Security, Our Priority' section.",
+            "what trading bots are available": "We offer bots like Glint BTC Bot, Leverage Master Bot, Hedging Futures Bot, and Volatility Rider Bot. See the 'Futures Trading Bots' section for more info!",
+            "who should i contact for more information": "You can contact our team at 6382406759 for more information. We’re here to help!"
+        };
+
+        function chatWithAssistant() {
+            const input = document.getElementById('chat-input');
+            const history = document.getElementById('chat-history');
+            const userMessage = input.value.trim();
+
+            if (userMessage === "") return;
+
+            const userDiv = document.createElement('div');
+            userDiv.className = 'chat-message user-message';
+            userDiv.textContent = userMessage;
+            history.appendChild(userDiv);
+
+            const normalizedMessage = userMessage.toLowerCase().replace(/[^a-z\s]/g, '');
+            let botResponse = "I'm sorry, I didn't understand that. Try asking something like 'What is Trendex?' or 'How do I start trading?'";
+            
+            for (const key in responses) {
+                if (normalizedMessage.includes(key)) {
+                    botResponse = responses[key];
+                    break;
+                }
+            }
+
+            const botDiv = document.createElement('div');
+            botDiv.className = 'chat-message bot-message';
+            botDiv.textContent = botResponse;
+            history.appendChild(botDiv);
+
+            input.value = '';
+            history.scrollTop = history.scrollHeight;
+            history.style.scrollBehavior = 'smooth';
+
+            document.getElementById('chat-suggestions').style.display = 'block';
+        }
+
+        function handleSuggestedQuestion(question) {
+            document.getElementById('chat-input').value = question;
+            chatWithAssistant();
+        }
+
+        document.getElementById('waitlist-form').addEventListener('submit', async (e) => {
+  // 🛠️ Copy calculator input values into hidden fields
+  const getVal = (id) => document.getElementById(id)?.value || '';
+  document.getElementById('formCurrency').value = getVal('currency');
+  document.getElementById('formPrincipal').value = getVal('principal');
+  document.getElementById('formInterestRate').value = getVal('interestRate');
+  document.getElementById('formLeverage').value = getVal('leverage');
+  document.getElementById('formYears').value = getVal('years');
+
+            e.preventDefault();
+            const form = e.target;
+            const feedbackDiv = document.getElementById('form-feedback');
+            const nameInput = form.querySelector('input[name="name"]');
+            const contactNumberInput = form.querySelector('input[name="contactNumber"]');
+            const workEmailInput = form.querySelector('input[name="workEmail"]');
+
+            const name = nameInput.value.trim();
+            const contactNumber = contactNumberInput.value.trim();
+            const workEmail = workEmailInput.value.trim();
+
+            const nameRegex = /^[A-Za-z\s]{2,}$/;
+            if (!nameRegex.test(name)) {
+                feedbackDiv.textContent = 'Please enter a valid name (at least 2 characters, letters and spaces only).';
+                feedbackDiv.className = 'error';
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(workEmail)) {
+                feedbackDiv.textContent = 'Please enter a valid work email address.';
+                feedbackDiv.className = 'error';
+                return;
+            }
+
+            const phoneRegex = /^\d{10}$/;
+            if (!phoneRegex.test(contactNumber)) {
+                feedbackDiv.textContent = 'Please enter a valid 10-digit contact number.';
+                feedbackDiv.className = 'error';
+                return;
+            }
+
+            feedbackDiv.textContent = 'Submitting...';
+            feedbackDiv.className = '';
+
+            const formData = new FormData(form);
+            const urlEncodedData = new URLSearchParams(formData).toString();
+
+            console.log('Submitting form to:', form.action);
+            console.log('Payload:', urlEncodedData);
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: urlEncodedData,
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Accept': 'application/json'
+                    },
+                    mode: 'cors'
+                });
+
+                console.log('Response status:', response.status);
+                console.log('Response headers:', [...response.headers.entries()]);
+
+                const result = await response.json();
+                console.log('Response body:', result);
+
+                if (result.status === 'success') {
+                    feedbackDiv.textContent = result.message || 'Successfully joined the waitlist!';
+                    feedbackDiv.className = 'success';
+                    form.reset();
+                    fetchWaitlistData();
+                } else {
+                    feedbackDiv.textContent = result.message || 'Failed to submit the form. Please try again.';
+                    feedbackDiv.className = 'error';
+                }
+            } catch (error) {
+                console.error('Form submission error:', error);
+                feedbackDiv.textContent = `Error: ${error.message}. Check the browser console for details, and ensure the Apps Script is deployed with 'Anyone' access.`;
+                feedbackDiv.className = 'error';
+            }
+        });
+
+        async function fetchWaitlistData() {
+            const waitlistDiv = document.getElementById('waitlist-data');
+            const errorDiv = document.getElementById('waitlist-data-error');
+            waitlistDiv.innerHTML = '';
+            errorDiv.style.display = 'none';
+
+            const url = 'https://script.google.com/macros/s/AKfycbzO2IvJ-11aNLrC1o_H9kBzbF9cLCLffNs5GJZlF6fIZumcsK_OdIqLKuv6ggvXwVz3tA/exec';
+            console.log('Fetching waitlist data from:', url);
+
+            try {
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: { 'Accept': 'application/json' },
+                    mode: 'cors'
+                });
+
+                console.log('Fetch response status:', response.status);
+                console.log('Fetch response headers:', [...response.headers.entries()]);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error: ${response.status} ${response.statusText}`);
+                }
+
+                const result = await response.json();
+                console.log('Fetch response body:', result);
+
+                if (result.status === 'success' && result.data && result.data.length > 0) {
+                    let table = '<table><tr><th>Name</th><th>Contact Number</th><th>Work Email</th><th>Timestamp</th></tr>';
+                    result.data.forEach(entry => {
+                        table += `<tr>
+                            <td>${entry.name || 'N/A'}</td>
+                            <td>${entry.contact_number || 'N/A'}</td>
+                            <td>${entry.work_email || 'N/A'}</td>
+                            <td>${entry.timestamp ? new Date(entry.timestamp).toLocaleString() : 'N/A'}</td>
+                        </tr>`;
+                    });
+                    table += '</table>';
+                    waitlistDiv.innerHTML = table;
+                    waitlistDiv.style.display = 'block';
+                } else if (result.status === 'success' && (!result.data || result.data.length === 0)) {
+                    waitlistDiv.innerHTML = '<p>No entries in the waitlist yet.</p>';
+                    waitlistDiv.style.display = 'block';
+                } else {
+                    errorDiv.textContent = result.message || 'Failed to fetch waitlist data.';
+                    errorDiv.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Fetch waitlist error:', error);
+                errorDiv.textContent = `Error: ${error.message}. Ensure the Apps Script is deployed with 'Anyone' access and has a valid 'doGet' function.`;
+                errorDiv.style.display = 'block';
+            }
+        }
+
+        function showContactUs() {
+            const contactDiv = document.getElementById('contact-us');
+            contactDiv.style.display = 'block';
+        }
+
+        function toggleFAQ(element) {
+            const answer = element.nextElementSibling;
+            answer.classList.toggle('active');
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            try {
+                new TradingView.widget({
+                    "container_id": "tradingview_chart",
+                    "width": "100%",
+                    "height": "500",
+                    "symbol": "BINANCE:BTCUSDT",
+                    "interval": "D",
+                    "timezone": "Etc/UTC",
+                    "theme": "dark",
+                    "style": "1",
+                    "locale": "en",
+                    "toolbar_bg": "#1b263b",
+                    "enable_publishing": false,
+                    "allow_symbol_change": true,
+                    "details": true,
+                    "studies": ["MASimple@tv-basicstudies"]
+                });
+            } catch (error) {
+                console.error("Error loading TradingView chart:", error);
+                document.getElementById('chart-error').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
