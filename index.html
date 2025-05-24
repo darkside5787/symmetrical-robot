@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trendex AI Bot - Automate Your Trading</title>
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Trendex AI Bot - Automate Your Trading</title>
+<style>
         body { margin: 0; font-family: 'Arial', sans-serif; background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%); color: #e0e0e0; }
         header { text-align: center; padding: 50px 20px; background: rgba(0, 0, 0, 0.5); }
         h1 { font-size: 3em; margin: 0; color: #00ddeb; text-shadow: 0 0 10px #00ddeb; }
@@ -80,294 +81,288 @@
         #market-updates th { background: rgba(0, 221, 235, 0.2); }
         #market-updates .positive { color: #00ff00; }
         #market-updates .negative { color: #ff0000; }
-    </style>
+    
+
+@media (max-width: 768px) {
+    .chat-bubble {
+        width: 90% !important;
+        right: 5% !important;
+        bottom: 100px !important;
+        max-height: 60vh;
+    }
+    #toggle-chat {
+        right: 5% !important;
+        bottom: 20px !important;
+    }
+}
+</style>
 </head>
 <body>
-    <header>
-        <audio id="background-audio" loop>
-            <source src="audio.mp3" type="audio/mpeg">
+<header>
+<audio id="background-audio" loop="">
+<source src="audio.mp3" type="audio/mpeg"/>
             Your browser does not support the audio element.
         </audio>
-        <button onclick="toggleAudio()">Unmute Audio</button>
-        <p>Audio failed to load. Host the file and update the URL.</p>
-        <h1>Automate Your Trading with Trendex AI Bot</h1>
-        <p>Smarter, Faster, Profitable — Get Real-Time Signals & Auto-Trade Execution</p>
-        <button onclick="window.location.href='#join-waitlist'">Claim My Spot</button>
-        <p>Trusted by 10,000+ Traders Worldwide</p>
-    </header>
-
-    <section id="why-trendex">
-        <h2>🚀 Why Trendex?</h2>
-        <div class="glow-box stats">
-            <div class="accuracy">
-                <h3>99.9%</h3>
-                <p>Trade Execution Accuracy</p>
-            </div>
-            <div class="speed">
-                <h3>10x</h3>
-                <p>Faster Than Manual Trading</p>
-            </div>
-            <div class="exchanges">
-                <h3>30+</h3>
-                <p>Supported Exchanges</p>
-            </div>
-            <div class="security">
-                <h3>100%</h3>
-                <p>Secure Trading</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="security">
-        <h2>🔒 Your Security, Our Priority</h2>
-        <div class="glow-box">
-            <p>Trade with confidence using AES-256 encryption, two-factor authentication, and regular third-party security audits.</p>
-            <img src="https://via.placeholder.com/600x300?text=Security+Features" alt="Security Features">
-        </div>
-    </section>
-
-    <section id="live-feed">
-        <h2>📡 Live Trade Feed (Demo)</h2>
-        <div class="glow-box">
-            <div id="tradingview_chart"></div>
-            <p>View real-time market data from Binance. Switch between trading pairs to track your favorite assets.</p>
-            <p id="chart-error" style="color: #ff6f61; display: none;">Failed to load the chart. Please check your internet connection or try again later.</p>
-        </div>
-    </section>
-
-    <section id="market-updates">
-        <h2>📊 Live Market Updates</h2>
-        <div class="glow-box">
-            <p>Stay informed with the latest market trends for top cryptocurrencies.</p>
-            <table>
-                <tr>
-                    <th>Asset</th>
-                    <th>Price (USD)</th>
-                    <th>24h Change</th>
-                    <th>Last Updated</th>
-                </tr>
-                <tr>
-                    <td>Bitcoin (BTC)</td>
-                    <td>$75,000</td>
-                    <td class="positive">+3.5%</td>
-                    <td>02:13 PM IST, May 19, 2025</td>
-                </tr>
-                <tr>
-                    <td>Ethereum (ETH)</td>
-                    <td>$3,200</td>
-                    <td class="negative">-1.2%</td>
-                    <td>02:13 PM IST, May 19, 2025</td>
-                </tr>
-                <tr>
-                    <td>Binance Coin (BNB)</td>
-                    <td>$580</td>
-                    <td class="positive">+2.8%</td>
-                    <td>02:13 PM IST, May 19, 2025</td>
-                </tr>
-            </table>
-            <p style="margin-top: 10px;">Note: This is a demo. Real-time data requires API integration.</p>
-        </div>
-    </section>
-
-    <section id="futures-bots">
-        <h2>🤖 Futures Trading Bots</h2>
-        <div class="glow-box stats">
-            <div class="bot-card">
-                <h3>Glint BTC Bot</h3>
-                <p>Optimized for Bitcoin futures trading with AI-driven strategies.</p>
-                <button onclick="window.location.href='#join-waitlist'">Start Trading</button>
-            </div>
-            <div class="bot-card">
-                <h3>Leverage Master Bot</h3>
-                <p>Customize leverage up to 10X with dynamic risk controls.</p>
-                <button onclick="window.location.href='#join-waitlist'">Start Trading</button>
-            </div>
-            <div class="bot-card">
-                <h3>Hedging Futures Bot</h3>
-                <p>Protect your portfolio with automated hedging strategies.</p>
-                <button onclick="window.location.href='#join-waitlist'">Start Trading</button>
-            </div>
-            <div class="bot-card">
-                <h3>Volatility Rider Bot</h3>
-                <p>Capitalize on market swings with breakout trading.</p>
-                <button onclick="window.location.href='#join-waitlist'">Start Trading</button>
-            </div>
-        </div>
-    </section>
-
-    <section id="videos">
-        <h2>🎥 Latest Trendex AI Videos</h2>
-        <div class="glow-box video-player">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLzVFc58cSNM_KzF5uH8j5Lq7Wq9kV1lT&autoplay=1&mute=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            <button onclick="window.location.href='https://www.youtube.com/channel/UC485uhNL2M0RqM_SNq075kw'">Visit Our Channel</button>
-            <p>Check out our latest videos on trading tips and updates! To embed your channel's videos, create a playlist on your channel, then replace the 'list=PLzVFc58cSNM_KzF5uH8j5Lq7Wq9kV1lT' with your playlist ID in the embed URL above.</p>
-        </div>
-    </section>
-
-    <section id="features">
-        <h2>🌟 What You'll Get</h2>
-        <div class="glow-box">
-            <p>🤖 AI-Based Signals</p>
-            <p>📈 Trend Analysis</p>
-            <p>⚙️ Auto Trading</p>
-            <p>🔒 Risk Control</p>
-            <p>📞 1-on-1 Support</p>
-            <p>🗓 Daily & Weekly Market Outlook</p>
-            <p>📉 Stop Loss + Trailing Protection</p>
-            <p>📢 Telegram Trade Alerts</p>
-            <p>📚 Free Trading Tutorials</p>
-        </div>
-    </section>
-
-    <section id="testimonials">
-        <h2>🌍 What Our Traders Say</h2>
-        <div class="glow-box testimonials">
-            <div>
-                <p>"Trendex transformed my trading! I grew my portfolio by 20% in 3 months."</p>
-                <p>- Alex M., Crypto Trader</p>
-                <p>Verified Buyer</p>
-            </div>
-            <div>
-                <p>"The real-time dashboard is a game-changer. I track every trade instantly."</p>
-                <p>- Priya S., Investor</p>
-                <p>Verified Buyer</p>
-            </div>
-            <div>
-                <p>"Their support team is amazing. Always there to help me optimize my strategy."</p>
-                <p>- John K., Beginner Trader</p>
-                <p>Verified Buyer</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="new-features">
-        <h2>✨ More Features</h2>
-        <div class="glow-box">
-            <h3>Frequently Asked Questions</h3>
-            <div class="faq-item">
-                <h3 onclick="toggleFAQ(this)">How does Trendex ensure my trades are secure?</h3>
-                <div class="faq-answer">We use AES-256 encryption, two-factor authentication, and regular third-party security audits to keep your trades safe.</div>
-            </div>
-            <div class="faq-item">
-                <h3 onclick="toggleFAQ(this)">What exchanges does Trendex support?</h3>
-                <div class="faq-answer">Trendex supports over 30 exchanges, including Binance, Coinbase, Kraken, and more.</div>
-            </div>
-            <div class="faq-item">
-                <h3 onclick="toggleFAQ(this)">Can I get personalized trading advice?</h3>
-                <div class="faq-answer">Yes! We offer 1-on-1 support to help you optimize your trading strategy.</div>
-            </div>
-            <h3 style="margin-top: 20px;">Trading Tools</h3>
-            <div class="tools-list">
-                <div class="tool-card">
-                    <h4>Portfolio Tracker</h4>
-                    <p>Monitor your investments in real-time across multiple exchanges.</p>
-                </div>
-                <div class="tool-card">
-                    <h4>Risk Analyzer</h4>
-                    <p>Assess and manage risks with AI-driven insights.</p>
-                </div>
-                <div class="tool-card">
-                    <h4>Trade Simulator</h4>
-                    <p>Practice trading strategies without risking real funds.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="bonus-offer">
-        <h2>🏡 Bonus Offer</h2>
-        <div class="glow-box">
-            <p>Join Now & Get:</p>
-            <p>✅ Lifetime Telegram Group Entry<br>✅ Strategy Masterclass Invite<br>✅ Priority WhatsApp Support</p>
-            <p>Only 25 Spots Left!</p>
-        </div>
-    </section>
-
-    <section id="referral">
-        <h2>💰 Share and Earn</h2>
-        <div class="glow-box">
-            <p>Invite friends to Trendex and earn 5% of their trading profits.</p>
-            <button onclick="showContactUs()">Get Your Referral Link</button>
-            <div id="contact-us" style="display: none; margin-top: 10px;">
-                <p>Contact Us to get your referral link:<br>📞 Call: 6382406759<br>📧 Email: support@trendex.com</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="profit-calculator">
-        <h2>📊 Estimate Your Profits</h2>
-        <div class="glow-box profit-calculator">
-            <p>The Rule of 72 is a simple way to estimate how long it will take for your investment to double based on a fixed annual rate of return. Just divide 72 by your expected annual return percentage.</p>
-            <p>Enter the details below to see your returns after 1 and 2 years, with or without leverage for futures trading. Note: Leverage increases both potential gains and risks.</p>
-            <select id="currency">
-                <option value="USD">USD</option>
-                <option value="INR">INR</option>
-                <option value="EUR">EUR</option>
-                <option value="GBP">GBP</option>
-            </select>
-            <input type="number" id="principal" placeholder="Initial Investment">
-            <input type="number" id="interestRate" placeholder="Expected Annual Return (%)">
-            <input type="number" id="leverage" placeholder="Leverage (e.g., 2 for 2x, optional)">
-            <input type="number" id="years" placeholder="Number of Years (optional)">
-            <button onclick="calculateProfits()">Calculate</button>
-            <div id="results" style="margin-top: 20px;"></div>
-            <p style="margin-top: 20px;">Learn more about the <a href="https://www.richdad.com/tools/cashflow-quadrant" target="_blank">Cashflow Quadrant</a> and how investing can help you achieve financial freedom.</p>
-        </div>
-    </section>
-
-    <section id="join-waitlist">
-        <h2>📝 Join the Waitlist</h2>
-        <div class="glow-box animated-border">
-            <form id="waitlist-form" action="https://script.google.com/macros/s/AKfycbzN9QWDk1JbhsD75VDTuq7ceFN2zJhGsr8wmgPF4VkgmKnpxWB8qpKjvOt3xDmeKS0piQ/exec" method="POST">
-                <input type="text" name="name" placeholder="Enter your name" required pattern="[A-Za-z\s]{2,}">
-                <input type="tel" name="contactNumber" placeholder="Enter your contact number" required pattern="\d{10}">
-                <input type="email" name="workEmail" placeholder="Enter your work email" required>
-                <button type="submit">Claim My Spot Now</button>
-            </form>
-            <div id="form-feedback"></div>
-            <button onclick="fetchWaitlistData()" style="margin-top: 10px;">View Current Waitlist</button>
-            <div id="waitlist-data-error"></div>
-            <div id="waitlist-data"></div>
-        </div>
-        <p>
-            <a href="https://wa.me/916382406759">📱 Chat on WhatsApp</a> |
+<button onclick="toggleAudio()">Unmute Audio</button>
+<p>Audio failed to load. Host the file and update the URL.</p>
+<h1>Automate Your Trading with Trendex AI Bot</h1>
+<p>Smarter, Faster, Profitable — Get Real-Time Signals &amp; Auto-Trade Execution</p>
+<button onclick="window.location.href='#join-waitlist'">Claim My Spot</button>
+<p>Trusted by 10,000+ Traders Worldwide</p>
+</header>
+<section id="why-trendex">
+<h2>🚀 Why Trendex?</h2>
+<div class="glow-box stats">
+<div class="accuracy">
+<h3>99.9%</h3>
+<p>Trade Execution Accuracy</p>
+</div>
+<div class="speed">
+<h3>10x</h3>
+<p>Faster Than Manual Trading</p>
+</div>
+<div class="exchanges">
+<h3>30+</h3>
+<p>Supported Exchanges</p>
+</div>
+<div class="security">
+<h3>100%</h3>
+<p>Secure Trading</p>
+</div>
+</div>
+</section>
+<section id="security">
+<h2>🔒 Your Security, Our Priority</h2>
+<div class="glow-box">
+<p>Trade with confidence using AES-256 encryption, two-factor authentication, and regular third-party security audits.</p>
+<img alt="Security Features" src="https://via.placeholder.com/600x300?text=Security+Features"/>
+</div>
+</section>
+<section id="live-feed">
+<h2>📡 Live Trade Feed (Demo)</h2>
+<div class="glow-box">
+<div id="tradingview_chart"></div>
+<p>View real-time market data from Binance. Switch between trading pairs to track your favorite assets.</p>
+<p id="chart-error" style="color: #ff6f61; display: none;">Failed to load the chart. Please check your internet connection or try again later.</p>
+</div>
+</section>
+<section id="market-updates">
+<h2>📊 Live Market Updates</h2>
+<div class="glow-box">
+<p>Stay informed with the latest market trends for top cryptocurrencies.</p>
+<table>
+<tr>
+<th>Asset</th>
+<th>Price (USD)</th>
+<th>24h Change</th>
+<th>Last Updated</th>
+</tr>
+<tr>
+<td>Bitcoin (BTC)</td>
+<td>$75,000</td>
+<td class="positive">+3.5%</td>
+<td>02:13 PM IST, May 19, 2025</td>
+</tr>
+<tr>
+<td>Ethereum (ETH)</td>
+<td>$3,200</td>
+<td class="negative">-1.2%</td>
+<td>02:13 PM IST, May 19, 2025</td>
+</tr>
+<tr>
+<td>Binance Coin (BNB)</td>
+<td>$580</td>
+<td class="positive">+2.8%</td>
+<td>02:13 PM IST, May 19, 2025</td>
+</tr>
+</table>
+<p style="margin-top: 10px;">Note: This is a demo. Real-time data requires API integration.</p>
+</div>
+</section>
+<section id="futures-bots">
+<h2>🤖 Futures Trading Bots</h2>
+<div class="glow-box stats">
+<div class="bot-card">
+<h3>Glint BTC Bot</h3>
+<p>Optimized for Bitcoin futures trading with AI-driven strategies.</p>
+<button onclick="window.location.href='#join-waitlist'">Start Trading</button>
+</div>
+<div class="bot-card">
+<h3>Leverage Master Bot</h3>
+<p>Customize leverage up to 10X with dynamic risk controls.</p>
+<button onclick="window.location.href='#join-waitlist'">Start Trading</button>
+</div>
+<div class="bot-card">
+<h3>Hedging Futures Bot</h3>
+<p>Protect your portfolio with automated hedging strategies.</p>
+<button onclick="window.location.href='#join-waitlist'">Start Trading</button>
+</div>
+<div class="bot-card">
+<h3>Volatility Rider Bot</h3>
+<p>Capitalize on market swings with breakout trading.</p>
+<button onclick="window.location.href='#join-waitlist'">Start Trading</button>
+</div>
+</div>
+</section>
+<section id="videos">
+<h2>🎥 Latest Trendex AI Videos</h2>
+<div class="glow-box video-player"><iframe allow="autoplay; encrypted-media" allowfullscreen="True" frameborder="0" height="315" src="https://www.youtube.com/embed/VozNEL1l130" style="margin-bottom: 20px;" width="560"></iframe><iframe allow="autoplay; encrypted-media" allowfullscreen="True" frameborder="0" height="315" src="https://www.youtube.com/embed/-Qs-RR1smQ8" style="margin-bottom: 20px;" width="560"></iframe><iframe allow="autoplay; encrypted-media" allowfullscreen="True" frameborder="0" height="315" src="https://www.youtube.com/embed/HVg2zcYf2vM" style="margin-bottom: 20px;" width="560"></iframe><button onclick="window.location.href='https://www.youtube.com/channel/UC485uhNL2M0RqM_SNq075kw'">Visit Our Channel</button><p>Check out our latest videos on trading tips and updates! Visit our YouTube channel for more Shorts and updates.</p></div>
+</section>
+<section id="features">
+<h2>🌟 What You'll Get</h2>
+<div class="glow-box">
+<p>🤖 AI-Based Signals</p>
+<p>📈 Trend Analysis</p>
+<p>⚙️ Auto Trading</p>
+<p>🔒 Risk Control</p>
+<p>📞 1-on-1 Support</p>
+<p>🗓 Daily &amp; Weekly Market Outlook</p>
+<p>📉 Stop Loss + Trailing Protection</p>
+<p>📢 Telegram Trade Alerts</p>
+<p>📚 Free Trading Tutorials</p>
+</div>
+</section>
+<section id="testimonials">
+<h2>🌍 What Our Traders Say</h2>
+<div class="glow-box testimonials">
+<div>
+<p>"Trendex transformed my trading! I grew my portfolio by 20% in 3 months."</p>
+<p>- Alex M., Crypto Trader</p>
+<p>Verified Buyer</p>
+</div>
+<div>
+<p>"The real-time dashboard is a game-changer. I track every trade instantly."</p>
+<p>- Priya S., Investor</p>
+<p>Verified Buyer</p>
+</div>
+<div>
+<p>"Their support team is amazing. Always there to help me optimize my strategy."</p>
+<p>- John K., Beginner Trader</p>
+<p>Verified Buyer</p>
+</div>
+</div>
+</section>
+<section id="new-features">
+<h2>✨ More Features</h2>
+<div class="glow-box">
+<h3>Frequently Asked Questions</h3>
+<div class="faq-item">
+<h3 onclick="toggleFAQ(this)">How does Trendex ensure my trades are secure?</h3>
+<div class="faq-answer">We use AES-256 encryption, two-factor authentication, and regular third-party security audits to keep your trades safe.</div>
+</div>
+<div class="faq-item">
+<h3 onclick="toggleFAQ(this)">What exchanges does Trendex support?</h3>
+<div class="faq-answer">Trendex supports over 30 exchanges, including Binance, Coinbase, Kraken, and more.</div>
+</div>
+<div class="faq-item">
+<h3 onclick="toggleFAQ(this)">Can I get personalized trading advice?</h3>
+<div class="faq-answer">Yes! We offer 1-on-1 support to help you optimize your trading strategy.</div>
+</div>
+<h3 style="margin-top: 20px;">Trading Tools</h3>
+<div class="tools-list">
+<div class="tool-card">
+<h4>Portfolio Tracker</h4>
+<p>Monitor your investments in real-time across multiple exchanges.</p>
+</div>
+<div class="tool-card">
+<h4>Risk Analyzer</h4>
+<p>Assess and manage risks with AI-driven insights.</p>
+</div>
+<div class="tool-card">
+<h4>Trade Simulator</h4>
+<p>Practice trading strategies without risking real funds.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="bonus-offer">
+<h2>🏡 Bonus Offer</h2>
+<div class="glow-box">
+<p>Join Now &amp; Get:</p>
+<p>✅ Lifetime Telegram Group Entry<br/>✅ Strategy Masterclass Invite<br/>✅ Priority WhatsApp Support</p>
+<p>Only 25 Spots Left!</p>
+</div>
+</section>
+<section id="referral">
+<h2>💰 Share and Earn</h2>
+<div class="glow-box">
+<p>Invite friends to Trendex and earn 5% of their trading profits.</p>
+<button onclick="showContactUs()">Get Your Referral Link</button>
+<div id="contact-us" style="display: none; margin-top: 10px;">
+<p>Contact Us to get your referral link:<br/>📞 Call: 6382406759<br/>📧 Email: support@trendex.com</p>
+</div>
+</div>
+</section>
+<section id="profit-calculator">
+<h2>📊 Estimate Your Profits</h2>
+<div class="glow-box profit-calculator">
+<p>The Rule of 72 is a simple way to estimate how long it will take for your investment to double based on a fixed annual rate of return. Just divide 72 by your expected annual return percentage.</p>
+<p>Enter the details below to see your returns after 1 and 2 years, with or without leverage for futures trading. Note: Leverage increases both potential gains and risks.</p>
+<select id="currency">
+<option value="USD">USD</option>
+<option value="INR">INR</option>
+<option value="EUR">EUR</option>
+<option value="GBP">GBP</option>
+</select>
+<input id="principal" placeholder="Initial Investment" type="number"/>
+<input id="interestRate" placeholder="Expected Annual Return (%)" type="number"/>
+<input id="leverage" placeholder="Leverage (e.g., 2 for 2x, optional)" type="number"/>
+<input id="years" placeholder="Number of Years (optional)" type="number"/>
+<button onclick="calculateProfits()">Calculate</button>
+<div id="results" style="margin-top: 20px;"></div>
+<p style="margin-top: 20px;">Learn more about the <a href="https://www.richdad.com/tools/cashflow-quadrant" target="_blank">Cashflow Quadrant</a> and how investing can help you achieve financial freedom.</p>
+</div>
+</section>
+<section id="join-waitlist">
+<h2>📝 Join the Waitlist</h2>
+<div class="glow-box animated-border">
+<form action="https://script.google.com/macros/s/AKfycbzN9QWDk1JbhsD75VDTuq7ceFN2zJhGsr8wmgPF4VkgmKnpxWB8qpKjvOt3xDmeKS0piQ/exec" id="waitlist-form" method="POST">
+<input name="name" pattern="[A-Za-z\s]{2,}" placeholder="Enter your name" required="" type="text"/>
+<input name="contactNumber" pattern="\d{10}" placeholder="Enter your contact number" required="" type="tel"/>
+<input name="workEmail" placeholder="Enter your work email" required="" type="email"/>
+<button type="submit">Claim My Spot Now</button>
+</form>
+<div id="form-feedback"></div>
+<button onclick="fetchWaitlistData()" style="margin-top: 10px;">View Current Waitlist</button>
+<div id="waitlist-data-error"></div>
+<div id="waitlist-data"></div>
+</div>
+<p>
+<a href="https://wa.me/916382406759">📱 Chat on WhatsApp</a> |
             <a href="https://chat.whatsapp.com/DY5ZdFjGVz0JF1O4fBejmr">📣 Join WhatsApp Channel</a> |
             <a href="https://instagram.com/manivasakam024">📸 Follow on Instagram</a> |
             <a href="tel:+916382406759">📞 Call Us: 6382406759</a>
-        </p>
-    </section>
-
-    <section id="chat-assistant">
-        <div class="chat-bubble">
-            <div class="chat-header" onclick="toggleChat()">
-                <p>Trendex AI Assistant</p>
-            </div>
-            <div class="chat-suggestions" id="chat-suggestions">
-                <p onclick="handleSuggestedQuestion('What is Trendex?')">What is Trendex?</p>
-                <p onclick="handleSuggestedQuestion('How do I start trading?')">How do I start trading?</p>
-                <p onclick="handleSuggestedQuestion('What are the benefits of using Trendex?')">What are the benefits of using Trendex?</p>
-                <p onclick="handleSuggestedQuestion('Is my money safe with Trendex?')">Is my money safe with Trendex?</p>
-                <p onclick="handleSuggestedQuestion('What trading bots are available?')">What trading bots are available?</p>
-                <p onclick="handleSuggestedQuestion('Who should I contact for more information?')">Who should I contact for more information?</p>
-            </div>
-            <div class="chat-history" id="chat-history">
-                <div class="bot-message">Hello! I'm the Trendex AI Assistant. How can I help you today?</div>
-            </div>
-            <input type="text" id="chat-input" placeholder="Ask me anything...">
-            <button onclick="chatWithAssistant()">Send</button>
-        </div>
-    </section>
-
-    <footer>
-        <p>© 2025 Trendex. All rights reserved. | <a href="#privacy">Privacy Policy</a></p>
-        <div>
-            <input type="email" placeholder="Subscribe to our newsletter">
-            <button onclick="subscribe()">Subscribe</button>
-        </div>
-    </footer>
-
-    <script src="https://s3.tradingview.com/tv.js"></script>
-    <script>
+</p>
+</section>
+<section id="chat-assistant"><button id="toggle-chat" style="position: fixed; bottom: 80px; right: 20px; z-index: 1001;">💬 Chat</button>
+<div id="chat-container" style="display: none;"><div class="chat-bubble">
+<div class="chat-header" onclick="toggleChat()">
+<p>Trendex AI Assistant</p>
+</div>
+<div class="chat-suggestions" id="chat-suggestions">
+<p onclick="handleSuggestedQuestion('What is Trendex?')">What is Trendex?</p>
+<p onclick="handleSuggestedQuestion('How do I start trading?')">How do I start trading?</p>
+<p onclick="handleSuggestedQuestion('What are the benefits of using Trendex?')">What are the benefits of using Trendex?</p>
+<p onclick="handleSuggestedQuestion('Is my money safe with Trendex?')">Is my money safe with Trendex?</p>
+<p onclick="handleSuggestedQuestion('What trading bots are available?')">What trading bots are available?</p>
+<p onclick="handleSuggestedQuestion('Who should I contact for more information?')">Who should I contact for more information?</p>
+</div>
+<div class="chat-history" id="chat-history">
+<div class="bot-message">Hello! I'm the Trendex AI Assistant. How can I help you today?</div>
+</div>
+<input id="chat-input" placeholder="Ask me anything..." type="text"/>
+<button onclick="chatWithAssistant()">Send</button>
+</div></div>
+</section>
+<footer>
+<p>© 2025 Trendex. All rights reserved. | <a href="#privacy">Privacy Policy</a></p>
+<div>
+<input placeholder="Subscribe to our newsletter" type="email"/>
+<button onclick="subscribe()">Subscribe</button>
+</div>
+</footer>
+<script src="https://s3.tradingview.com/tv.js"></script>
+<script>
         const currencySymbols = {
             'USD': '$',
             'INR': '₹',
@@ -667,6 +662,12 @@
                 document.getElementById('chart-error').style.display = 'block';
             }
         });
-    </script>
+    
+
+document.getElementById('toggle-chat').addEventListener('click', () => {
+    const chatContainer = document.getElementById('chat-container');
+    chatContainer.style.display = (chatContainer.style.display === 'none' || chatContainer.style.display === '') ? 'block' : 'none';
+});
+</script>
 </body>
 </html>
