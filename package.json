@@ -18,9 +18,6 @@
   "homepage": "https://github.com/darkside5787/symmetrical-robot#readme",
   "description": "",
   "dependencies": {
-    "react-router-dom": "^7.6.0"
+    "react-router-dom": "^6.0.0"
   }
-}
-"dependencies": {
-  "react-router-dom": "^6.0.0"
 }
